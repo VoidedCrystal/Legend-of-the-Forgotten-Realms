@@ -21,16 +21,23 @@ public class Main {
         int classChoice = scanner.nextInt();
         Character character;
 
-        // Create a character based on the chosen class
-        switch (classChoice) {
-            case 1 -> character = new Fighter(name, gender, height); // Fighter class
-            case 2 -> character = new Mage(name, gender, height);    // Mage class
-            case 3 -> character = new Rogue(name, gender, height);   // Rogue class
-            default -> {
-                // Default to Fighter if an invalid choice is made
-                System.out.println("Invalid choice. Defaulting to Fighter.");
-                character = new Fighter(name, gender, height);
+        // Check the class choice and create a character, or choose randomly if invalid
+        if (classChoice == 1) {
+            character = new Fighter(name, gender, height);
+        } else if (classChoice == 2) {
+            character = new Mage(name, gender, height);
+        } else if (classChoice == 3) {
+            character = new Rogue(name, gender, height);
+        } else {
+            // Generate a random number between 1 and 3 to choose a random class
+            int randomClass = (int) (Math.random() * 3) + 1;
+            switch (randomClass) {
+                case 1 -> character = new Fighter(name, gender, height);
+                case 2 -> character = new Mage(name, gender, height);
+                case 3 -> character = new Rogue(name, gender, height);
+                default -> throw new IllegalStateException("Unexpected value: " + randomClass);
             }
+            System.out.println("Invalid choice. A random class has been selected for you!");
         }
 
         // Allocate stats for the character and display the character information
