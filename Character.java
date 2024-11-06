@@ -1,4 +1,5 @@
 // Import the Scanner class for user input
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 // Abstract class representing a character in the game
@@ -38,21 +39,27 @@ public abstract class Character {
 
         System.out.println("You have " + pointsToAllocate + " points to allocate to your stats.");
         while (pointsToAllocate > 0) {
-            // Display current stats and prompt for allocation
-            System.out.println("Current Stats: Strength: " + strength + ", Charisma: " + charisma + 
-                               ", Magic: " + magic + ", Constitution: " + constitution + ", Luck: " + luck);
-            System.out.println("Points left to allocate: " + pointsToAllocate);
-            System.out.println("Choose a stat to increase: (1) Strength, (2) Charisma, (3) Magic, (4) Constitution, (5) Luck");
-            int choice = scanner.nextInt();
+            try {
+                // Display current stats and prompt for allocation
+                System.out.println("Current Stats: Strength: " + strength + ", Charisma: " + charisma + 
+                                   ", Magic: " + magic + ", Constitution: " + constitution + ", Luck: " + luck);
+                System.out.println("Points left to allocate: " + pointsToAllocate);
+                System.out.println("Choose a stat to increase: (1) Strength, (2) Charisma, (3) Magic, (4) Constitution, (5) Luck");
+                int choice = scanner.nextInt();
 
-            // Allocate points based on the user's choice
-            switch (choice) {
-                case 1 -> { strength++; pointsToAllocate--; }
-                case 2 -> { charisma++; pointsToAllocate--; }
-                case 3 -> { magic++; pointsToAllocate--; }
-                case 4 -> { constitution++; pointsToAllocate--; }
-                case 5 -> { luck++; pointsToAllocate--; }
-                default -> System.out.println("Invalid choice. Try again."); // Handle invalid input
+                // Allocate points based on the user's choice
+                switch (choice) {
+                    case 1 -> { strength++; pointsToAllocate--; }
+                    case 2 -> { charisma++; pointsToAllocate--; }
+                    case 3 -> { magic++; pointsToAllocate--; }
+                    case 4 -> { constitution++; pointsToAllocate--; }
+                    case 5 -> { luck++; pointsToAllocate--; }
+                    default -> System.out.println("Invalid choice. Please select a number between 1 and 5."); // Handle invalid input
+                }
+            } catch (InputMismatchException e) {
+                // Handle non-numeric input gracefully
+                System.out.println("Invalid input. Please enter a number between 1 and 5.");
+                scanner.next(); // Clear the invalid input from the scanner
             }
         }
 
@@ -61,11 +68,10 @@ public abstract class Character {
 
     // Method to calculate derived stats like health and mana
     protected void calculateDerivedStats() {
-        this.health = constitution * 10; // Health is based on Constitution
-        this.mana = magic * 5;           // Mana is based on Magic
+        this.health = 100 + (constitution * 10); // Health starts at 100, then Constitution adds extra
+        this.mana = 100 + (magic * 5);           // Mana starts at 100, then Magic adds extra
     }
 
     // Abstract method to display character information (implemented in subclasses)
     public abstract void displayCharacterInfo();
 }
-
