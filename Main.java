@@ -31,7 +31,7 @@ public class Main {
                     }
                     case 2 -> {
                         // Load an existing character
-                        character = loadCharacter();
+                        character = loadCharacter(scanner);
                         if (character != null) {
                             System.out.println("Character loaded successfully!");
                             character.displayCharacterInfo();
@@ -90,19 +90,24 @@ public class Main {
         return character;
     }
 
-    // Method to save character data to a file
+    // Method to save character data to a file with the character's name in the filename
     private static void saveCharacter(Character character) {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("character.dat"))) {
+        String fileName = character.name.replaceAll("\\s+", "_") + "_character.dat"; // Replace spaces with underscores
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName))) {
             oos.writeObject(character);
-            System.out.println("Character saved successfully.");
+            System.out.println("Character saved successfully to " + fileName + ".");
         } catch (IOException e) {
             System.out.println("Failed to save character: " + e.getMessage());
         }
     }
 
     // Method to load character data from a file
-    private static Character loadCharacter() {
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("character.dat"))) {
+    private static Character loadCharacter(Scanner scanner) {
+        System.out.print("Enter the name of the character to load: ");
+        String name = scanner.nextLine();
+        String fileName = name.replaceAll("\\s+", "_") + "_character.dat"; // Replace spaces with underscores
+
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
             return (Character) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Error loading character: " + e.getMessage());
