@@ -1,9 +1,11 @@
-// Import the Scanner class for user input
+import java.io.Serializable;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 // Abstract class representing a character in the game
-public abstract class Character {
+public abstract class Character implements Serializable {
+    private static final long serialVersionUID = 1L; // For serialization
+
     // Character attributes
     protected String name;
     protected String gender;
@@ -57,7 +59,6 @@ public abstract class Character {
                     default -> System.out.println("Invalid choice. Please select a number between 1 and 5."); // Handle invalid input
                 }
             } catch (InputMismatchException e) {
-                // Handle non-numeric input gracefully
                 System.out.println("Invalid input. Please enter a number between 1 and 5.");
                 scanner.next(); // Clear the invalid input from the scanner
             }

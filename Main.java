@@ -1,61 +1,112 @@
-// Import the Scanner class for user input
+import java.io.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        Character character = null;
 
-        try {
-            // Welcome message and user input for character details
+        while (true) {
+            // Display the starting menu
             System.out.println("Welcome to the Text-Based RPG!");
-            System.out.print("Enter your character's name: ");
-            String name = scanner.nextLine();
+            System.out.println("1. Start New Game");
+            System.out.println("2. Load Character");
+            System.out.println("3. Exit");
+            System.out.print("Choose an option: ");
 
-            System.out.print("Enter your character's gender: ");
-            String gender = scanner.nextLine();
+            try {
+                int menuChoice = scanner.nextInt();
+                scanner.nextLine(); // Consume the newline
 
-            System.out.print("Enter your character's height (in cm): ");
-            int height = scanner.nextInt();
-
-            // Prompt the player to choose a class
-            System.out.println("Choose a class: (1) Fighter, (2) Mage, (3) Rogue");
-            int classChoice = scanner.nextInt();
-            Character character;
-
-            // Check the class choice and create a character, or choose randomly if invalid
-            if (classChoice == 1) {
-                character = new Fighter(name, gender, height);
-            } else if (classChoice == 2) {
-                character = new Mage(name, gender, height);
-            } else if (classChoice == 3) {
-                character = new Rogue(name, gender, height);
-            } else {
-                // Generate a random number between 1 and 3 to choose a random class
-                int randomClass = (int) (Math.random() * 3) + 1;
-                switch (randomClass) {
-                    case 1 -> character = new Fighter(name, gender, height);
-                    case 2 -> character = new Mage(name, gender, height);
-                    case 3 -> character = new Rogue(name, gender, height);
-                    default -> throw new IllegalStateException("Unexpected value: " + randomClass);
+                switch (menuChoice) {
+                    case 1 -> {
+                        // Start a new game
+                        character = createNewCharacter(scanner);
+                        character.allocateStats();
+                        saveCharacter(character); // Save the new character
+                        character.displayCharacterInfo();
+                        System.out.println("Your adventure begins...");
+                        // You can add more game content here
+                    }
+                    case 2 -> {
+                        // Load an existing character
+                        character = loadCharacter();
+                        if (character != null) {
+                            System.out.println("Character loaded successfully!");
+                            character.displayCharacterInfo();
+                            System.out.println("Your adventure continues...");
+                            // You can add more game content here
+                        } else {
+                            System.out.println("Failed to load character or no save file found.");
+                        }
+                    }
+                    case 3 -> {
+                        // Exit the game
+                        System.out.println("Exiting the game. Goodbye!");
+                        return;
+                    }
+                    default -> System.out.println("Invalid choice. Please select 1, 2, or 3.");
                 }
-                System.out.println("Invalid choice. A random class has been selected for you!");
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number between 1 and 3.");
+                scanner.next(); // Clear the invalid input
             }
+        }
+    }
 
-            // Allocate stats for the character and display the character information
-            character.allocateStats();
-            character.displayCharacterInfo();
+    // Method to create a new character
+    private static Character createNewCharacter(Scanner scanner) {
+        System.out.print("Enter your character's name: ");
+        String name = scanner.nextLine();
 
-            // Placeholder for the game loop
-            System.out.println("Your adventure begins...");
-            // This part can be expanded for more game content
+        System.out.print("Enter your character's gender: ");
+        String gender = scanner.nextLine();
 
-        } catch (InputMismatchException e) {
-            // Handle invalid input type (e.g., entering text when expecting a number)
-            System.out.println("Invalid input. Please enter numbers for height and class choice.");
-        } catch (Exception e) {
-            // Catch any other unexpected exceptions
-            System.out.println("An unexpected error occurred: " + e.getMessage());
+        System.out.print("Enter your character's height (in cm): ");
+        int height = scanner.nextInt();
+
+        System.out.println("Choose a class: (1) Fighter, (2) Mage, (3) Rogue");
+        int classChoice = scanner.nextInt();
+        Character character;
+
+        if (classChoice == 1) {
+            character = new Fighter(name, gender, height);
+        } else if (classChoice == 2) {
+            character = new Mage(name, gender, height);
+        } else if (classChoice == 3) {
+            character = new Rogue(name, gender, height);
+        } else {
+            // Randomly choose a class if an invalid choice is made
+            int randomClass = (int) (Math.random() * 3) + 1;
+            switch (randomClass) {
+                case 1 -> character = new Fighter(name, gender, height);
+                case 2 -> character = new Mage(name, gender, height);
+                case 3 -> character = new Rogue(name, gender, height);
+                default -> throw new IllegalStateException("Unexpected value: " + randomClass);
+            }
+            System.out.println("Invalid choice. A random class has been selected for you!");
+        }
+        return character;
+    }
+
+    // Method to save character data to a file
+    private static void saveCharacter(Character character) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("character.dat"))) {
+            oos.writeObject(character);
+            System.out.println("Character saved successfully.");
+        } catch (IOException e) {
+            System.out.println("Failed to save character: " + e.getMessage());
+        }
+    }
+
+    // Method to load character data from a file
+    private static Character loadCharacter() {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("character.dat"))) {
+            return (Character) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Error loading character: " + e.getMessage());
+            return null;
         }
     }
 }
