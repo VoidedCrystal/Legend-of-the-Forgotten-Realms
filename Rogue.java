@@ -1,11 +1,14 @@
+// Rogue class, inherits from Character
 public class Rogue extends Character {
+    // Constructor to initialize a Rogue with additional bonuses
     public Rogue(String name, String gender, int height) {
         super(name, gender, height);
-        this.luck += 4;
-        this.strength += 1;
-        calculateDerivedStats();
+        this.luck += 4;            // Rogue gets a bonus to Luck
+        this.strength += 1;        // Rogue gets a small bonus to Strength
+        calculateDerivedStats();   // Recalculate health and mana
     }
 
+    // Display character information specific to the Rogue class
     @Override
     public void displayCharacterInfo() {
         System.out.println("Character Class: Rogue");
@@ -15,4 +18,3 @@ public class Rogue extends Character {
         System.out.println("Health: " + health + ", Mana: " + mana);
     }
 }
-
