@@ -1,20 +1,29 @@
-// Rogue class, inherits from Character
 public class Rogue extends Character {
-    // Constructor to initialize a Rogue with additional bonuses
+    private static final long serialVersionUID = 1L;
+
+    // Constructor for Rogue class
     public Rogue(String name, String gender, int height) {
         super(name, gender, height);
-        this.luck += 4;            // Rogue gets a bonus to Luck
-        this.strength += 1;        // Rogue gets a small bonus to Strength
-        calculateDerivedStats();   // Recalculate health and mana
+        luck += 3; // Rogues get a bonus to luck
+        calculateDerivedStats(); // Recalculate health and mana
     }
 
-    // Display character information specific to the Rogue class
+    // Display character information for Rogue
     @Override
     public void displayCharacterInfo() {
-        System.out.println("Character Class: Rogue");
-        System.out.println("Name: " + name + ", Gender: " + gender + ", Height: " + height + " cm");
-        System.out.println("Stats - Strength: " + strength + ", Charisma: " + charisma + 
-                           ", Magic: " + magic + ", Constitution: " + constitution + ", Luck: " + luck);
-        System.out.println("Health: " + health + ", Mana: " + mana);
+        System.out.println("=== Character Sheet ===");
+        System.out.println("Class: Rogue");
+        System.out.println("Name: " + name);
+        System.out.println("Gender: " + gender);
+        System.out.println("Height: " + height + " cm");
+        System.out.println("Level: " + level); // Show the level
+        System.out.println("Strength: " + strength);
+        System.out.println("Charisma: " + charisma);
+        System.out.println("Magic: " + magic);
+        System.out.println("Constitution: " + constitution);
+        System.out.println("Luck: " + luck);
+        System.out.println("Health: " + health);
+        System.out.println("Mana: " + mana);
+        System.out.println("=======================");
     }
 }

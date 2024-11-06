@@ -1,20 +1,29 @@
-// Mage class, inherits from Character
 public class Mage extends Character {
-    // Constructor to initialize a Mage with additional bonuses
+    private static final long serialVersionUID = 1L;
+
+    // Constructor for Mage class
     public Mage(String name, String gender, int height) {
         super(name, gender, height);
-        this.magic += 4;           // Mage gets a bonus to Magic
-        this.charisma += 1;        // Mage gets a bonus to Charisma
-        calculateDerivedStats();   // Recalculate health and mana
+        magic += 3; // Mages get a bonus to magic
+        calculateDerivedStats(); // Recalculate health and mana
     }
 
-    // Display character information specific to the Mage class
+    // Display character information for Mage
     @Override
     public void displayCharacterInfo() {
-        System.out.println("Character Class: Mage");
-        System.out.println("Name: " + name + ", Gender: " + gender + ", Height: " + height + " cm");
-        System.out.println("Stats - Strength: " + strength + ", Charisma: " + charisma + 
-                           ", Magic: " + magic + ", Constitution: " + constitution + ", Luck: " + luck);
-        System.out.println("Health: " + health + ", Mana: " + mana);
+        System.out.println("=== Character Sheet ===");
+        System.out.println("Class: Mage");
+        System.out.println("Name: " + name);
+        System.out.println("Gender: " + gender);
+        System.out.println("Height: " + height + " cm");
+        System.out.println("Level: " + level); // Show the level
+        System.out.println("Strength: " + strength);
+        System.out.println("Charisma: " + charisma);
+        System.out.println("Magic: " + magic);
+        System.out.println("Constitution: " + constitution);
+        System.out.println("Luck: " + luck);
+        System.out.println("Health: " + health);
+        System.out.println("Mana: " + mana);
+        System.out.println("=======================");
     }
 }

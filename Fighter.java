@@ -1,20 +1,29 @@
-// Fighter class, inherits from Character
 public class Fighter extends Character {
-    // Constructor to initialize a Fighter with additional bonuses
+    private static final long serialVersionUID = 1L;
+
+    // Constructor for Fighter class
     public Fighter(String name, String gender, int height) {
         super(name, gender, height);
-        this.strength += 3;        // Fighter gets a bonus to Strength
-        this.constitution += 2;    // Fighter gets a bonus to Constitution
-        calculateDerivedStats();   // Recalculate health and mana
+        strength += 3; // Fighters get a bonus to strength
+        calculateDerivedStats(); // Recalculate health and mana
     }
 
-    // Display character information specific to the Fighter class
+    // Display character information for Fighter
     @Override
     public void displayCharacterInfo() {
-        System.out.println("Character Class: Fighter");
-        System.out.println("Name: " + name + ", Gender: " + gender + ", Height: " + height + " cm");
-        System.out.println("Stats - Strength: " + strength + ", Charisma: " + charisma + 
-                           ", Magic: " + magic + ", Constitution: " + constitution + ", Luck: " + luck);
-        System.out.println("Health: " + health + ", Mana: " + mana);
+        System.out.println("=== Character Sheet ===");
+        System.out.println("Class: Fighter");
+        System.out.println("Name: " + name);
+        System.out.println("Gender: " + gender);
+        System.out.println("Height: " + height + " cm");
+        System.out.println("Level: " + level); // Show the level
+        System.out.println("Strength: " + strength);
+        System.out.println("Charisma: " + charisma);
+        System.out.println("Magic: " + magic);
+        System.out.println("Constitution: " + constitution);
+        System.out.println("Luck: " + luck);
+        System.out.println("Health: " + health);
+        System.out.println("Mana: " + mana);
+        System.out.println("=======================");
     }
 }
