@@ -25,18 +25,16 @@ public class Main {
                         character = createNewCharacter(scanner);
                         character.allocateStats();
                         saveCharacter(character); // Save the new character
-                        character.displayCharacterInfo();
                         System.out.println("Your adventure begins...");
-                        // You can add more game content here
+                        startStory(character, scanner); // Start the story immediately
                     }
                     case 2 -> {
                         // Load an existing character
                         character = loadCharacter(scanner);
                         if (character != null) {
                             System.out.println("Character loaded successfully!");
-                            character.displayCharacterInfo();
                             System.out.println("Your adventure continues...");
-                            // You can add more game content here
+                            startStory(character, scanner); // Continue the story immediately
                         } else {
                             System.out.println("Failed to load character or no save file found.");
                         }
@@ -88,6 +86,12 @@ public class Main {
             System.out.println("Invalid choice. A random class has been selected for you!");
         }
         return character;
+    }
+
+    // Method to start the story
+    private static void startStory(Character character, Scanner scanner) {
+        StoryManager storyManager = new StoryManager(character);
+        storyManager.startStory(scanner);
     }
 
     // Method to save character data to a file with the character's name in the filename
