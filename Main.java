@@ -9,7 +9,7 @@ public class Main {
 
         while (true) {
             // Display the starting menu
-            System.out.println("Welcome to the Text-Based RPG!");
+            System.out.println("Welcome to 'Legends of the Forgotten Realm'!");
             System.out.println("1. Start New Game");
             System.out.println("2. Load Character");
             System.out.println("3. Exit");
